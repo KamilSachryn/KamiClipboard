@@ -35,5 +35,15 @@ namespace KamiClipboard
             return name;
         }
 
+        public override bool Equals(object? obj)
+        {
+          
+            if (obj == null) return false;
+            if (obj is not ClipboardItem) return false;  
+
+            ClipboardItem item2 = (ClipboardItem)obj;
+            return this.getContent() == item2.getContent();
+        }
+
     }
 }
