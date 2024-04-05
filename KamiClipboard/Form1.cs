@@ -7,6 +7,7 @@ using Timer = System.Windows.Forms.Timer;
 using System.Xml;
 using System.Text;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace KamiClipboard
 {
@@ -80,7 +81,7 @@ namespace KamiClipboard
             {
                 long length = new System.IO.FileInfo(xmlFile).Length;
 
-                if(length < 41)
+                if(length < 41) //size of xml header
                 {
                     return false;
                 }
@@ -142,6 +143,42 @@ namespace KamiClipboard
 
         }
 
+        void DeleteXML(ClipboardItem item)
+        {
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFile);
+            XmlNode root = xmlDoc.DocumentElement;
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                XmlNode subNode = node;
+                string name = node.SelectSingleNode("name").InnerText;
+                string content = node.SelectSingleNode("content").InnerText;
+
+                if(content == item.getContent())
+                {
+                    root.RemoveChild(node);
+                }
+                
+
+            }
+
+            SaveXMLToFile(xmlDoc);
+            
+            listBox1.Items.Remove(listBox1.SelectedItem);
+        }
+
+        void SaveXMLToFile(XmlDocument xmlDoc)
+        {
+            xmlDoc.Save(fileName);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            XmlWriter writer = XmlWriter.Create(xmlFile, settings);
+            xmlDoc.WriteTo(writer);
+            writer.Close();
+        }
+
 
         private Timer timer1;
         public void InitTimer()
@@ -167,9 +204,8 @@ namespace KamiClipboard
 
         ClipboardItem getClipboard()
         {
-            String txt = Clipboard.GetText();
-            String name = Regex.Replace(txt, @"\t|\n|\r", ""); //remove tabs and newlines
-            name = Regex.Replace(name, @"\s+", " "); //replace repeating spaces with one space
+            String txt = Clipboard.GetText().Trim();
+            String name = cleanText(txt);
             name = name.Substring(0, name.Length > NAME_LENGTH ? NAME_LENGTH : name.Length); //cut to max NAME_LENGTH size
             name = name.Trim(); //trim leading and trailing spaces
             ClipboardItem item = new ClipboardItem(name, txt);
@@ -177,9 +213,17 @@ namespace KamiClipboard
             return item;
         }
 
+        string cleanText(string str)
+        {
+            str = Regex.Replace(str, @"\t|\n|\r", ""); //remove tabs and newlines
+            str = Regex.Replace(str, @"\s+", " "); //replace repeating spaces with one space
+            str = str.Trim(); //trim leading and trailing spaces
+            return str;
+        }
+
         void recordItem(ClipboardItem item, bool fromXML = false)
         {
-            if(!listBox1.Items.Contains(item))
+            if(!listBox1.Items.Contains(item) && cleanText(item.getName()).Length > 0)
             {
                 listBox1.Items.Add(item);
                 if (!fromXML)
@@ -197,9 +241,14 @@ namespace KamiClipboard
         private void button1_Click(object sender, EventArgs e)
         {
 
-            ClipboardItem temp = new ClipboardItem("name", counter++.ToString()) ;
+            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            if(item != null)
+            {
+                DeleteXML(item);
+                richTextBox1.Clear();
+            }
 
-            listBox1.Items.Add(temp);
+
 
             
         }
@@ -236,8 +285,10 @@ namespace KamiClipboard
         {
             ClipboardItem temp = (ClipboardItem)listBox1.SelectedItem;
 
-
-            richTextBox1.Text = temp.getContent();
+            if (temp != null)
+            {
+                richTextBox1.Text = temp.getContent();
+            }
         }
 
 
