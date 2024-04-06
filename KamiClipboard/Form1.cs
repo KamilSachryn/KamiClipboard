@@ -8,6 +8,7 @@ using System.Xml;
 using System.Text;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace KamiClipboard
 {
@@ -130,14 +131,24 @@ namespace KamiClipboard
             xmlDoc.Load(xmlFile);
             XmlNode root = xmlDoc.DocumentElement;
 
+            Stack<ClipboardItem> stack = new Stack<ClipboardItem>();
+
             foreach (XmlNode node in root.ChildNodes)
             {
                 XmlNode subNode = node;
                 string name = node.SelectSingleNode("name").InnerText;
                 string content = node.SelectSingleNode("content").InnerText;
 
-                recordItem(new ClipboardItem(name, content), true);
 
+                stack.Push(new ClipboardItem(name, content));
+                
+
+            }
+
+            //reverse list so newest item shows up ontop
+            while(stack.Count > 0)
+            {
+                recordItem(stack.Pop(), true);
             }
 
 
@@ -225,9 +236,19 @@ namespace KamiClipboard
         {
             if(!listBox1.Items.Contains(item) && cleanText(item.getName()).Length > 0)
             {
-                listBox1.Items.Add(item);
-                if (!fromXML)
+
+                
+
+                //listBox1.Items.Add(item);
+                if (fromXML)
                 {
+
+                    listBox1.Items.Add(item);
+                }
+                else
+                {
+                    listBox1.Items.Insert(0, item);
+                    
                     WriteXML(item);
                 }
 
