@@ -27,20 +27,25 @@ namespace KamiClipboard
         {
             InitializeComponent();
 
+            //set xml file location in mydocuments
             String path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path = Path.Combine(path, "KamiClipboard");
 
+            //create dir if doesnt exist
             Directory.CreateDirectory(path);
-            //outputFile = new StreamWriter(Path.Combine(path, fileName));
-            //inputFile = new StreamReader(Path.Combine(path, fileName));
+
             xmlFile = path + "\\XMLDB.xml";
 
             //WriteXML();
 
+
+            //create base file
             CreateXML();
 
+            //get data from xml
             ReadXML();
            
+            //begin timer loop to check clipboard
             InitTimer();
 
 
