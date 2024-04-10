@@ -317,8 +317,15 @@ namespace KamiClipboard
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            if (item != null)
+            {
+                Clipboard.SetText(item.getContent());
+            }
 
 
-
+        }
     }
 }
