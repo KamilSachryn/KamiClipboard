@@ -327,5 +327,14 @@ namespace KamiClipboard
 
 
         }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            if (item != null)
+            {
+                Clipboard.SetText(item.getContent());
+            }
+        }
     }
 }

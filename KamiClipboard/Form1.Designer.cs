@@ -69,11 +69,13 @@ namespace KamiClipboard
             this.listBox1.Size = new System.Drawing.Size(212, 334);
             this.listBox1.TabIndex = 1;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(311, 12);
+            this.richTextBox1.Location = new System.Drawing.Point(316, 12);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(445, 334);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
