@@ -101,6 +101,7 @@ namespace KamiClipboard
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "KamiClipboard";
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResumeLayout(false);
 
         }

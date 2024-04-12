@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace KamiClipboard
 {
@@ -26,6 +27,10 @@ namespace KamiClipboard
         public Form1()
         {
             InitializeComponent();
+
+          
+
+            
 
             //set xml file location in mydocuments
             String path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -49,7 +54,6 @@ namespace KamiClipboard
             InitTimer();
 
 
- 
         }
 
         void CreateXML()
@@ -283,15 +287,24 @@ namespace KamiClipboard
         {
             base.OnResize(e);
 
-            bool cursorNotInBar = Screen.GetWorkingArea(this).Contains(Cursor.Position);
-
             if (this.WindowState == FormWindowState.Minimized)
             {
-                this.ShowInTaskbar = false;
-                this.Hide();
+                SendTotray();
             }
 
 
+
+        }
+
+        void SendTotray()
+        {
+            bool cursorNotInBar = Screen.GetWorkingArea(this).Contains(Cursor.Position);
+
+            this.notifyIcon1.Visible = true;
+           // this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+            this.Hide();
+            
 
         }
 
@@ -335,6 +348,22 @@ namespace KamiClipboard
             {
                 Clipboard.SetText(item.getContent());
             }
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                
+                //to minimize window
+                this.WindowState = FormWindowState.Minimized;
+
+                //to hide from taskbar
+                this.Hide();
+                return;
+            }
+           
         }
     }
 }
