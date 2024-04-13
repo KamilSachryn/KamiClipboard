@@ -56,18 +56,21 @@ namespace KamiClipboard
 
         }
 
+        //Creates or updates the db file
         void CreateXML()
         {
 
 
            
-
+            //if db either doesnt exists or isnt formatted properly
             if (!XMlFileIsReady())
             {
+                //set indents for human readability
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
 
 
+                //write empty database with root element
                 using (XmlWriter writer = XmlWriter.Create(xmlFile, settings))
                 {
                     writer.WriteStartElement("ClipboardEntries");
@@ -81,6 +84,7 @@ namespace KamiClipboard
            
         }
 
+        //checks if the DB file exists and is formatted properly
         bool XMlFileIsReady()
         {
             if(!File.Exists(xmlFile))
@@ -100,32 +104,42 @@ namespace KamiClipboard
             return true;
         }
 
+        //writes a new item to the database
         void WriteXML(ClipboardItem item)
         {
 
           
-
+            //load db file into memory
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFile);
 
+            //find root element
             XmlNode root = xmlDoc.DocumentElement;
+
+            //Create parent node to be added
             XmlNode newEntry = xmlDoc.CreateNode("element", "ClipboardEntry", "");
 
-
+            //Create children nodes to hold entry name and entry content
             XmlNode newItemName = xmlDoc.CreateNode("element", "name", "");
             XmlNode newItemContent = xmlDoc.CreateNode("element", "content", "");
                 
+            //append name child to parent
             newEntry.AppendChild(newItemName);
 
+            //add name to the db entry
             newItemName.InnerText = item.getName();
 
+            //append content child to parent
             newEntry.AppendChild(newItemContent);
 
+            //add content to the db entry
             newItemContent.InnerText = item.getContent();
 
+            //append new node to the database
             root.AppendChild(newEntry);
-            xmlDoc.Save(fileName);
 
+            //write to db
+            xmlDoc.Save(fileName);
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             XmlWriter writer = XmlWriter.Create(xmlFile, settings);
