@@ -148,14 +148,20 @@ namespace KamiClipboard
            
         }
 
+        //read all entries from db and push to memory
         void ReadXML()
         {
+            //load db into memory
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFile);
+
+            //find root
             XmlNode root = xmlDoc.DocumentElement;
 
+            //create stack to reverse output later on
             Stack<ClipboardItem> stack = new Stack<ClipboardItem>();
 
+            //loop through nodes, get name and content, add to stack
             foreach (XmlNode node in root.ChildNodes)
             {
                 XmlNode subNode = node;
@@ -177,19 +183,25 @@ namespace KamiClipboard
 
         }
 
+        //remove 1 item from the list and db
         void DeleteXML(ClipboardItem item)
         {
 
+            //load db into memory
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFile);
+
+            //find root
             XmlNode root = xmlDoc.DocumentElement;
 
+            //loop through nodes until we find matching content
             foreach (XmlNode node in root.ChildNodes)
             {
                 XmlNode subNode = node;
                 string name = node.SelectSingleNode("name").InnerText;
                 string content = node.SelectSingleNode("content").InnerText;
 
+                //remove node from parent
                 if(content == item.getContent())
                 {
                     root.RemoveChild(node);
@@ -198,8 +210,10 @@ namespace KamiClipboard
 
             }
 
+            //save to file
             SaveXMLToFile(xmlDoc);
             
+            //remove from gui list
             listBox1.Items.Remove(listBox1.SelectedItem);
         }
 
