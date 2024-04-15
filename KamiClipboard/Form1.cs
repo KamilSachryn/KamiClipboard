@@ -269,17 +269,18 @@ namespace KamiClipboard
             return str;
         }
 
+
+        //add item to gui and xml
         void recordItem(ClipboardItem item, bool fromXML = false)
         {
+            //if the listbox doesnt contain the item and the item has content
             if(!listBox1.Items.Contains(item) && cleanText(item.getName()).Length > 0)
             {
 
-                
-
-                //listBox1.Items.Add(item);
+                //if the item comes from XML dont add it to XML again
+                //else add it to both gui and xml
                 if (fromXML)
                 {
-
                     listBox1.Items.Add(item);
                 }
                 else
@@ -288,22 +289,22 @@ namespace KamiClipboard
                     
                     WriteXML(item);
                 }
-
-                using(outputFile)
-                {
-
-                }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        //Delete an item 
+        private void button_Delete(object sender, EventArgs e)
         {
 
+            //load item into memory
             ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            //if an item was selected
             if(item != null)
             {
+                //remove entry from GUI and XML
                 DeleteXML(item);
-                richTextBox1.Clear();
+                //remove content from view
+                textBox_Content.Clear();
             }
 
 
@@ -311,12 +312,16 @@ namespace KamiClipboard
             
         }
 
+        //when program is minimized send it to tray instead
         protected override void OnResize(EventArgs e)
         {
+            //event call
             base.OnResize(e);
 
+            //if we're minimized
             if (this.WindowState == FormWindowState.Minimized)
             {
+                //send to tray
                 SendTotray();
             }
 
@@ -324,27 +329,33 @@ namespace KamiClipboard
 
         }
 
+        //Send application to tray
         void SendTotray()
         {
-            bool cursorNotInBar = Screen.GetWorkingArea(this).Contains(Cursor.Position);
-
-            this.notifyIcon1.Visible = true;
-           // this.WindowState = FormWindowState.Minimized;
+            //make the notifyIcon visible in tray
+            this.notifyIcon_trayIcon.Visible = true;
+            //make the taskbar not show the program
             this.ShowInTaskbar = false;
+            //hide gui
             this.Hide();
             
 
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        //same as MouseClick
+        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
         }
 
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        //if the tray icon is clicked make the gui appear
+        private void trayIcon_MouseClick(object sender, MouseEventArgs e)
         {
+            //set windowstate to be shown
             this.WindowState = FormWindowState.Normal;
+            //make visible in taskbar
             this.ShowInTaskbar = true;
+            //show gui
             this.Show();
         }
 
@@ -354,7 +365,7 @@ namespace KamiClipboard
 
             if (temp != null)
             {
-                richTextBox1.Text = temp.getContent();
+                textBox_Content.Text = temp.getContent();
             }
         }
 

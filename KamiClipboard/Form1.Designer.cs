@@ -33,9 +33,9 @@ namespace KamiClipboard
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notifyIcon_trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.textBox_Content = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -47,18 +47,18 @@ namespace KamiClipboard
             this.button1.TabIndex = 0;
             this.button1.Text = "Remove";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.button_Delete);
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
-            this.notifyIcon1.BalloonTipText = "TestText";
-            this.notifyIcon1.BalloonTipTitle = "TestTitle";
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            this.notifyIcon_trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.notifyIcon_trayIcon.BalloonTipText = "TestText";
+            this.notifyIcon_trayIcon.BalloonTipTitle = "TestTitle";
+            this.notifyIcon_trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon_trayIcon.Text = "notifyIcon1";
+            this.notifyIcon_trayIcon.Visible = true;
+            this.notifyIcon_trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
+            this.notifyIcon_trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseDoubleClick);
             // 
             // listBox1
             // 
@@ -73,12 +73,12 @@ namespace KamiClipboard
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(316, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(445, 334);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.textBox_Content.Location = new System.Drawing.Point(316, 12);
+            this.textBox_Content.Name = "richTextBox1";
+            this.textBox_Content.ReadOnly = true;
+            this.textBox_Content.Size = new System.Drawing.Size(445, 334);
+            this.textBox_Content.TabIndex = 2;
+            this.textBox_Content.Text = "";
             // 
             // button2
             // 
@@ -96,7 +96,7 @@ namespace KamiClipboard
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.textBox_Content);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
@@ -109,9 +109,9 @@ namespace KamiClipboard
         #endregion
 
         private Button button1;
-        private NotifyIcon notifyIcon1;
+        private NotifyIcon notifyIcon_trayIcon;
         private ListBox listBox1;
-        private RichTextBox richTextBox1;
+        private RichTextBox textBox_Content;
         private Button button2;
     }
 }
