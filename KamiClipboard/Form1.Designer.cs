@@ -32,22 +32,22 @@ namespace KamiClipboard
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_delete = new System.Windows.Forms.Button();
             this.notifyIcon_trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox_itemList = new System.Windows.Forms.ListBox();
             this.textBox_Content = new System.Windows.Forms.RichTextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button_copy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(30, 373);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Remove";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button_Delete);
+            this.button_delete.Location = new System.Drawing.Point(30, 373);
+            this.button_delete.Name = "button1";
+            this.button_delete.Size = new System.Drawing.Size(75, 23);
+            this.button_delete.TabIndex = 0;
+            this.button_delete.Text = "Remove";
+            this.button_delete.UseVisualStyleBackColor = true;
+            this.button_delete.Click += new System.EventHandler(this.button_Delete);
             // 
             // notifyIcon1
             // 
@@ -62,14 +62,14 @@ namespace KamiClipboard
             // 
             // listBox1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(30, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(212, 334);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
+            this.listBox_itemList.FormattingEnabled = true;
+            this.listBox_itemList.ItemHeight = 15;
+            this.listBox_itemList.Location = new System.Drawing.Point(30, 12);
+            this.listBox_itemList.Name = "listBox1";
+            this.listBox_itemList.Size = new System.Drawing.Size(212, 334);
+            this.listBox_itemList.TabIndex = 1;
+            this.listBox_itemList.SelectedIndexChanged += new System.EventHandler(this.itemList_SelectedIndexChanged);
+            this.listBox_itemList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.itemList_MouseDoubleClick);
             // 
             // richTextBox1
             // 
@@ -82,23 +82,23 @@ namespace KamiClipboard
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(111, 373);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Copy";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button_copy.Location = new System.Drawing.Point(111, 373);
+            this.button_copy.Name = "button2";
+            this.button_copy.Size = new System.Drawing.Size(75, 23);
+            this.button_copy.TabIndex = 3;
+            this.button_copy.Text = "Copy";
+            this.button_copy.UseVisualStyleBackColor = true;
+            this.button_copy.Click += new System.EventHandler(this.buttonCopy_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button_copy);
             this.Controls.Add(this.textBox_Content);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.listBox_itemList);
+            this.Controls.Add(this.button_delete);
             this.Name = "Form1";
             this.Text = "KamiClipboard";
             this.Shown += new System.EventHandler(this.Form1_Shown);
@@ -108,10 +108,10 @@ namespace KamiClipboard
 
         #endregion
 
-        private Button button1;
+        private Button button_delete;
         private NotifyIcon notifyIcon_trayIcon;
-        private ListBox listBox1;
+        private ListBox listBox_itemList;
         private RichTextBox textBox_Content;
-        private Button button2;
+        private Button button_copy;
     }
 }

@@ -214,7 +214,7 @@ namespace KamiClipboard
             SaveXMLToFile(xmlDoc);
             
             //remove from gui list
-            listBox1.Items.Remove(listBox1.SelectedItem);
+            listBox_itemList.Items.Remove(listBox_itemList.SelectedItem);
         }
 
         void SaveXMLToFile(XmlDocument xmlDoc)
@@ -274,18 +274,18 @@ namespace KamiClipboard
         void recordItem(ClipboardItem item, bool fromXML = false)
         {
             //if the listbox doesnt contain the item and the item has content
-            if(!listBox1.Items.Contains(item) && cleanText(item.getName()).Length > 0)
+            if(!listBox_itemList.Items.Contains(item) && cleanText(item.getName()).Length > 0)
             {
 
                 //if the item comes from XML dont add it to XML again
                 //else add it to both gui and xml
                 if (fromXML)
                 {
-                    listBox1.Items.Add(item);
+                    listBox_itemList.Items.Add(item);
                 }
                 else
                 {
-                    listBox1.Items.Insert(0, item);
+                    listBox_itemList.Items.Insert(0, item);
                     
                     WriteXML(item);
                 }
@@ -297,7 +297,7 @@ namespace KamiClipboard
         {
 
             //load item into memory
-            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            ClipboardItem item = (ClipboardItem)listBox_itemList.SelectedItem;
             //if an item was selected
             if(item != null)
             {
@@ -359,46 +359,59 @@ namespace KamiClipboard
             this.Show();
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        //change content box when a new clipboard item is seletced
+        private void itemList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClipboardItem temp = (ClipboardItem)listBox1.SelectedItem;
+            //load selected clipboard item into memory
+            ClipboardItem temp = (ClipboardItem)listBox_itemList.SelectedItem;
 
+            //if an item was selected
             if (temp != null)
             {
+                //display content
                 textBox_Content.Text = temp.getContent();
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        //copy selected clipboard item's content into clipboard
+        private void buttonCopy_Click(object sender, EventArgs e)
         {
-            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            //load selected clipboard item into memory
+            ClipboardItem item = (ClipboardItem)listBox_itemList.SelectedItem;
+            //if an item was selected
             if (item != null)
             {
+                //push text into clipboard
                 Clipboard.SetText(item.getContent());
             }
 
 
         }
 
-        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        //if we double click an intentory item then copy it into memory directly
+        private void itemList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            ClipboardItem item = (ClipboardItem)listBox1.SelectedItem;
+            //load selected clipboard item into memory
+            ClipboardItem item = (ClipboardItem)listBox_itemList.SelectedItem;
+            //if an item was selected
             if (item != null)
             {
+                //push text into clipboard
                 Clipboard.SetText(item.getContent());
             }
         }
 
+        //On GUI Show
         private void Form1_Shown(object sender, EventArgs e)
         {
-
+            //if we're launching from .exe
             if (!System.Diagnostics.Debugger.IsAttached)
             {
                 
-                //to minimize window
+                //minimize window
                 this.WindowState = FormWindowState.Minimized;
 
-                //to hide from taskbar
+                //hide from taskbar
                 this.Hide();
                 return;
             }
