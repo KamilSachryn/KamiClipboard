@@ -24,10 +24,13 @@ namespace KamiClipboard
         string fileName = "XMLDB.xml";
         string xmlFile;
 
+
+        
+        
         public Form1()
         {
             InitializeComponent();
-
+            InitNotifyIcon();
           
 
             
@@ -52,6 +55,13 @@ namespace KamiClipboard
            
             //begin timer loop to check clipboard
             InitTimer();
+
+
+        }
+
+        void InitNotifyIcon()
+        {
+            NotifyIcon icon = this.notifyIcon_trayIcon;
 
 
         }
@@ -351,6 +361,15 @@ namespace KamiClipboard
         //if the tray icon is clicked make the gui appear
         private void trayIcon_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                showFromTray();
+            }
+        }
+
+        //makes gui appear from tray
+        private void showFromTray()
+        {
             //set windowstate to be shown
             this.WindowState = FormWindowState.Normal;
             //make visible in taskbar
@@ -416,6 +435,19 @@ namespace KamiClipboard
                 return;
             }
            
+        }
+
+        //on clicking exit in tray
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+
+        }
+
+        //on clicking open in tray
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showFromTray();
         }
     }
 }
