@@ -449,5 +449,15 @@ namespace KamiClipboard
         {
             showFromTray();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox_Content_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
